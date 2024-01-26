@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgAnimation = document.getElementById('bgAnimation');
     const numberOfColorBoxes = 400;
 
-    //Deklarimi i funksioneve 
+    /**  Deklarimi i funksioneve */
     const toggleAddTaskForm = () => {
         addTaskForm.classList.toggle("active");
         shadowEffect.classList.toggle("active");
@@ -25,16 +25,30 @@ document.addEventListener('DOMContentLoaded', () => {
         taskInput.value = "";
     };
 
+    // 'event' isnt used
     const cancelForm = (event) => {
         toggleAddTaskForm();
     };
+
+    const onAddTaskClick = () => {
+        const task = taskInput.value;
+
+        if (task === "") {
+            alert("Please enter a task!");
+        } else {
+            addTaskToList(task);
+            toggleAddTaskForm();
+            updateTaskCount();
+            saveTasksToLocalStorage();
+        }
+    }
 
     const updateTaskCount = () => {
         const taskCount = document.querySelectorAll('#list li').length;
         const countValueElement = document.querySelector('.count-value');
         countValueElement.textContent = taskCount;
-
         const wrapper = document.querySelector('.wrapper');
+
         if (taskCount === 0) {
             wrapper.style.backgroundImage = 'url("images/clapping-removebg-preview.png")';
             wrapper.style.backgroundRepeat = 'no-repeat';
@@ -91,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     };
 
-    // Load tasks from local storage if available
+    /** Load tasks from local storage if available */
     const loadTasksFromLocalStorage = () => {
         const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks.forEach(task => {
@@ -113,36 +127,24 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
 
         listTasks.querySelector(".delete").addEventListener("click",
-        function() {
+        () => {
             listTasks.remove();
             updateTaskCount();
             saveTasksToLocalStorage();
         });
 
-        listTasks.querySelector(".edit").addEventListener("click", function() {
+        listTasks.querySelector(".edit").addEventListener("click", () => {
             toggleEditMode(listTasks);
         });
 
         list.appendChild(listTasks);
     };
 
-    //Event Listeners
+    /**  Event Listeners */
     addTaskBtn.addEventListener("click", toggleAddTaskForm);
     shadowEffect.addEventListener("click", toggleAddTaskForm);
     cancelBtn.addEventListener("click", cancelForm);
-
-    addBtn.addEventListener("click", () => {
-        const task = taskInput.value;
-
-        if(task === "") {
-            alert("Please enter a task!");
-        } else {
-            addTaskToList(task);
-            toggleAddTaskForm();
-            updateTaskCount();
-            saveTasksToLocalStorage();
-        }
-    });
+    addBtn.addEventListener("click", onAddTaskClick);
 
     loadTasksFromLocalStorage();
 
@@ -154,3 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+/** Notes 
+ * Group together functions that are similar. Like Event Listeners
+ * Reuse Event Handlers. For example, the logic for updating the task count and saving tasks to local storage is duplicated.
+ * A good event handler name is onElementTypeOfEvent -> onAddTaskClick()
+ * Use single comment if the coment is only for the next line. use block comment when it is used for more than one line or functions.
+ * Update isnt working. Re produce: update and refresh the page directly.
+ * Create a separete function to handle listeners.
+*/
