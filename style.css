@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
 
+/* To-Do it isn't suggested to use (*) you can use html here */
+/* Dont use html tags directly. It will be hard to maintain and will force you to use !important. Not suggested. */
 *{
     margin: 0;
     padding: 0;
@@ -66,19 +68,27 @@ body {
     justify-content: space-between;
 }
 
+/* Dont use html tags directly. It will be hard to maintain */
+/* To-Do: use a custom class depending on what it stands for. Exp: 'greetings' */
 .welcome h1{
     font-size: 30px;
 }
+
+/* To-Do: use a custom class depending on what it stands for. */
 .welcome p {
     font-size: 20px;
 }
+
 .welcome .img {
     padding-right: 6%;
 }
+
+/* To-Do: use a custom class depending on what it stands for. */
 .welcome .img img {
     width: 5rem;
 }
 
+/* To-Do: use a custom class depending on what it stands for. */
 .add-task-btn i {
     font-size: 25px;
     color: black;
@@ -99,6 +109,7 @@ body {
     background-color: rgb(209, 226, 241);
     transition: all 0.3s;
 }
+
 .add-task-btn.active {
     z-index: 1;
     bottom: 20rem;
@@ -176,6 +187,7 @@ body {
     font-size: 14px;
     cursor: pointer;
 }
+
 .form-buttons button.add-btn {
     background-color: rgb(209, 226, 241);
     color: black;
@@ -313,6 +325,7 @@ body {
     opacity: 1;
     color: white;
 }
+
 .task  input:checked~p {
     text-decoration: line-through;
     opacity: 0.6;
@@ -331,6 +344,7 @@ body {
    align-items: center;
    transition: all 0.3s;
 }
+
 .task-wrapper .edit {
     position: absolute;
     margin-left: 70%;
@@ -353,9 +367,11 @@ body {
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
 }
+
 ::-webkit-scrollbar {
     width: 5px;
 }
+
 ::-webkit-scrollbar-thumb {
     background: grey;
 }
@@ -394,8 +410,8 @@ body {
     margin: 2px;
     background-color: aliceblue;
 }
+
 .colorBox:hover {
     background: black;
     transition-duration: 0s;
 }
-
