@@ -1,0 +1,401 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+}
+
+@media (min-width: 800px) {
+    .wrapper {
+        height: 45rem;
+        width: 28rem;
+        border-radius: 40px;
+        border: 5px solid rgb(11, 87, 87);
+    }
+}
+
+.screen-backdrop {
+    width: 100%;
+    height: 17rem;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 0% 0 50% 50%;
+    background-color: rgb(209, 226, 241);
+}
+
+.head-wrapper {
+    padding: 3% 3%;
+}
+
+.menu-btn {
+    cursor: pointer;
+    color: black; 
+    padding: 3% 3%;
+}
+
+.fa-solid.fa-bars {
+    color: black;
+    font-size: 30px; 
+    cursor: pointer;
+}
+
+.welcome {
+    padding-left: 3%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.welcome h1{
+    font-size: 30px;
+}
+.welcome p {
+    font-size: 20px;
+}
+.welcome .img {
+    padding-right: 6%;
+}
+.welcome .img img {
+    width: 5rem;
+}
+
+.add-task-btn i {
+    font-size: 25px;
+    color: black;
+}
+
+/* Add tasks button  */
+.add-task-btn {
+    position: absolute;
+    bottom: 2rem; 
+    right: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(209, 226, 241);
+    transition: all 0.3s;
+}
+.add-task-btn.active {
+    z-index: 1;
+    bottom: 20rem;
+    transform: rotate(45deg);
+}
+
+.add-task-btn:hover {
+    transform: scale(1.1);
+}
+
+.add-task {
+    position: absolute;
+    width: 100%;
+    bottom: -100%;
+    left: 0;
+    padding: 20px 30px;
+    transition: all 0.3s;
+}
+
+.add-task.active {
+    bottom: 0;
+}
+
+.add-task-img {
+    padding-left: 28%;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input ,
+.input-group label {
+    display: block;
+    width: 100%;
+}
+
+.input-group input {
+    position: relative;
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 15px 20px;
+    border-radius: 30px;
+    font-size: 1em;
+    box-shadow: 0 0 8px rgb(127, 171, 211);
+    transition: background-color 0.3s; 
+}
+
+.input-group input:focus {
+    background-color: rgba(127, 171, 211, 0.1); 
+}
+
+.input-group label {
+    width: max-content;
+    padding: 0 5px;
+    margin: 3px 0;
+    color: rgb(84, 82, 82);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.form-buttons button {
+    z-index: 2;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+.form-buttons button.add-btn {
+    background-color: rgb(209, 226, 241);
+    color: black;
+}
+
+.add-task-backdrop {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40rem;
+    height: 20rem;
+    border-radius: 50% 50% 0 0;
+    background-color: white;
+    border-top: 3px solid rgb(11, 125, 125);
+    transition: all 0.3s;
+}
+
+.shadow-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: #00000023;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.shadow-effect.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Tasks */
+.task-screen {
+    margin-top: 72%;
+}
+
+.tasks-wrapper {
+    padding: 0 15px;
+    margin-top: 1rem;
+    height: calc(100% - 12rem);
+    padding-bottom: 20px;
+    overflow: auto;  
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 400px; 
+    overflow-y: auto;
+    padding: 5% 0;
+}
+
+.task-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: aliceblue;
+    padding: 10px 20px;
+    margin: 10px 10px;
+    cursor: pointer;
+    border-radius: 22.5px;
+    color: black;
+    box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.1), inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -3px -3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-wrapper .delete {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: black;
+    cursor: pointer;
+    background-color: aliceblue;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.task-wrapper .delete:hover {
+    background-color: rgb(0, 0, 0.031);
+    color: white;
+}
+
+.task input:checked ~ .task-wrapper {
+    background-color: grey;
+}
+
+.task {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    width: max-content;
+    cursor: pointer;
+}
+
+.task input {
+    display: none;
+}
+
+.task .checkmark {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 2px;
+    border: 1px solid rgb(118, 116, 116);
+    color: rgb(118, 116, 116);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task .checkmark i {
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.task:hover .checkmark i {
+    opacity: 1;
+}
+
+.task  input:checked~.checkmark {
+    background-color: black;
+}
+
+.task  input:checked~.checkmark i {
+    opacity: 1;
+    color: white;
+}
+.task  input:checked~p {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task-wrapper .delete,
+.task-wrapper .edit {
+   min-width: 2rem;
+   height: 2rem;
+   padding: 0.5rem;
+   border-radius: 50%;
+   color: black;
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transition: all 0.3s;
+}
+.task-wrapper .edit {
+    position: absolute;
+    margin-left: 70%;
+}
+
+.task-wrapper .delete:hover,
+.task-wrapper .edit:hover {
+   background-color: rgb(0, 0, 0.031);
+   color: white;
+}
+
+#list {
+    position: relative;
+    margin-top: 20px;
+    height: 340px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: grey;
+}
+
+.edit-mode {
+    padding: 4px;
+    border-radius: 20px; 
+    transition: border-color 0.3s ease; 
+}
+
+.edit-mode:focus {
+    outline: none; 
+    color: rgb(11, 125, 125);
+}
+
+/* Adding animations on background */
+.bgAnimation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    background: aliceblue;
+    filter: saturate(2);
+    overflow: hidden;
+} 
+
+.colorBox {
+    z-index: 2;
+    filter: brightness(1,1);
+    transition: 2s ease;
+    position: relative;
+    margin: 2px;
+    background-color: aliceblue;
+}
+.colorBox:hover {
+    background: black;
+    transition-duration: 0s;
+}
+
