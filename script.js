@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    //Deklarimi i variablave dhe konstanteve
     const addTaskBtn = document.querySelector(".add-task-btn");
     const addTaskForm = document.querySelector(".add-task");
     const shadowEffect = document.querySelector(".shadow-effect");
@@ -10,7 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgAnimation = document.getElementById('bgAnimation');
     const numberOfColorBoxes = 400;
 
-    //Deklarimi i funksioneve 
+    /** Function to handle event listeners */
+    const addEventListeners = () => {
+        addTaskBtn.addEventListener("click", toggleAddTaskForm);
+        shadowEffect.addEventListener("click", toggleAddTaskForm);
+        cancelBtn.addEventListener("click", cancelForm);
+        addBtn.addEventListener("click", onAddTaskClick);
+    };
+
     const toggleAddTaskForm = () => {
         addTaskForm.classList.toggle("active");
         shadowEffect.classList.toggle("active");
@@ -25,16 +31,29 @@ document.addEventListener('DOMContentLoaded', () => {
         taskInput.value = "";
     };
 
-    const cancelForm = (event) => {
+    const cancelForm = () => {
         toggleAddTaskForm();
+    };
+
+    const onAddTaskClick = () => {
+        const task = taskInput.value;
+
+        if(task === "") {
+            alert("Please enter a task!");
+        } else {
+            addTaskToList(task);
+            toggleAddTaskForm();
+            updateTaskCount();
+            saveTasksToLocalStorage();
+        }
     };
 
     const updateTaskCount = () => {
         const taskCount = document.querySelectorAll('#list li').length;
         const countValueElement = document.querySelector('.count-value');
         countValueElement.textContent = taskCount;
-
         const wrapper = document.querySelector('.wrapper');
+
         if (taskCount === 0) {
             wrapper.style.backgroundImage = 'url("images/clapping-removebg-preview.png")';
             wrapper.style.backgroundRepeat = 'no-repeat';
@@ -50,14 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
         taskText.contentEditable = true;
         taskText.focus();
 
-        // Select all text in the contentEditable field
+        /**Select all text in the contentEditable field*/
         const selection = window.getSelection();
         const range = document.createRange();
         range.selectNodeContents(taskText);
         selection.removeAllRanges();
         selection.addRange(range);
 
-        // Move cursor to the end of the text
+        //Move cursor to the end of the text
         range.collapse(false); 
 
         taskText.classList.add("edit-mode");
@@ -79,31 +98,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         };
-
         taskText.addEventListener("keydown", saveEdit);
     };
 
-    const saveTasksToLocalStorage = () => {
-        const tasks = [];
-        document.querySelectorAll('#list li p').forEach(task => {
-            tasks.push(task.textContent);
-        });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    };
-
-    // Load tasks from local storage if available
     const loadTasksFromLocalStorage = () => {
         const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks.forEach(task => {
-            addTaskToList(task);
+            addTaskToList(task.task, task.checked);
         });
         updateTaskCount();
     };
-
-    const addTaskToList = (task) => {
+    
+    const saveTasksToLocalStorage = () => {
+        const tasks = [];
+        document.querySelectorAll('#list li').forEach(listTasks => {
+            tasks.push({
+                task: listTasks.querySelector('p').textContent,
+                checked: listTasks.querySelector('input[type="checkbox"]').checked
+            });
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    };
+    
+    const addTaskToList = (task, checked = false) => {
         let listTasks = document.createElement("li");
         listTasks.innerHTML = `<div class="task-wrapper">
-            <label class="task"> <input type="checkbox" name="checkbox">
+            <label class="task"> <input type="checkbox" name="checkbox" ${checked ? 'checked' : ''}>
                 <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                 <p>${task}</p> </label>
             <div class="edit">
@@ -111,46 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="delete">
                 <i id="delete" class="fa-solid fa-trash"></i></div>
             </div>`;
-
-        listTasks.querySelector(".delete").addEventListener("click",
-        function() {
+    
+        listTasks.querySelector(".delete").addEventListener("click", () => {
             listTasks.remove();
             updateTaskCount();
             saveTasksToLocalStorage();
         });
-
-        listTasks.querySelector(".edit").addEventListener("click", function() {
+    
+        listTasks.querySelector(".edit").addEventListener("click", () => {
             toggleEditMode(listTasks);
         });
-
+    
         list.appendChild(listTasks);
+    
+        // Set the checked state of the checkbox
+        listTasks.querySelector('input[type="checkbox"]').checked = checked;
     };
 
-    //Event Listeners
-    addTaskBtn.addEventListener("click", toggleAddTaskForm);
-    shadowEffect.addEventListener("click", toggleAddTaskForm);
-    cancelBtn.addEventListener("click", cancelForm);
+    // Call the function to set up event listeners 
+    addEventListeners();
 
-    addBtn.addEventListener("click", () => {
-        const task = taskInput.value;
-
-        if(task === "") {
-            alert("Please enter a task!");
-        } else {
-            addTaskToList(task);
-            toggleAddTaskForm();
-            updateTaskCount();
-            saveTasksToLocalStorage();
-        }
-    });
-
+    // Load tasks from local storage when the page loads
     loadTasksFromLocalStorage();
 
-    //Adding animations on CSS
+    /** Adding animations on CSS */
     for (let i = 0; i < numberOfColorBoxes; i++) {
         const colorBox = document.createElement('div');
         colorBox.classList.add('colorBox');
         bgAnimation.append(colorBox);
     }
 });
-
