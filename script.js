@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addTaskBtn.addEventListener("click", toggleAddTaskForm);
         shadowEffect.addEventListener("click", toggleAddTaskForm);
         cancelBtn.addEventListener("click", cancelForm);
-        addBtn.addEventListener("click", onAddTaskClick);
+        addBtn.addEventListener("click", onAddButtonClick);
     };
 
     const toggleAddTaskForm = () => {
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleAddTaskForm();
     };
 
-    const onAddTaskClick = () => {
+    const onAddButtonClick = () => {
         const task = taskInput.value;
 
         if(task === "") {
@@ -124,8 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let listTasks = document.createElement("li");
         listTasks.innerHTML = `<div class="task-wrapper">
             <label class="task"> <input type="checkbox" name="checkbox" ${checked ? 'checked' : ''}>
-                <span class="checkmark"><i class="fa-solid fa-check"></i></span>
-                <p>${task}</p> </label>
+                <span class="check-mark"><i class="fa-solid fa-check"></i></span>
+                <p class="theTask">${task}</p> </label>
             <div class="edit">
                 <i id="edit" class="fa-solid fa-pen-to-square"></i></div>
             <div class="delete">
